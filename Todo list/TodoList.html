@@ -59,7 +59,7 @@
             <label for="Description" >Description</label>
             <textarea class="form-control" id="description" rows="3"></textarea>
           </div>
-          <button  id="add" class="btn btn-primary" onclick="getAndUpdate()">Add to List</button>
+          <button  id="add" class="btn btn-primary" >Add to List</button>
           <button  id="clear" class="btn btn-primary" onclick="ClearStorage()">Clear</button>
 
             
@@ -74,7 +74,7 @@
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
-                    <tbody id="tablebody">
+                    <tbody id="tableBody">
                       <tr>
                         <th scope="row">1</th>
                         <td>Drink Coffee</td>
@@ -116,7 +116,7 @@ function getAndUpdate(){
 }
 
 function update(){
-    if(localStorage.getItem('itemsJosn')==null){
+    if(localStorage.getItem('itemsJson')==null){
         itemJsonArray = [];
         localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray))
     }
@@ -126,8 +126,8 @@ function update(){
     }
     //populate the table
 
-let tablebody = document.getElementById("tablebody");
-let str ="";
+let tableBody = document.getElementById("tableBody");
+let str =" ";
 itemJsonArray.forEach((element, index) => {
     str += `
     <tr>
@@ -137,7 +137,7 @@ itemJsonArray.forEach((element, index) => {
                     <td><button class="btn btn-sm btn-primary" onclick="deleted(${index})">Delete</button></td> 
                     </tr>`;
 });
-tablebody.innerHTML = str;
+tableBody.innerHTML = str;
 }
 add = document.getElementById("add");
 add.addEventListener("click",getAndUpdate);
@@ -146,10 +146,10 @@ update();
 function deleted(itemIndex) {
     console.log("Delete", itemIndex);
     itemJsonArrayStr = localStorage.getItem('itemsJson');
-    itemJsonArray = Json.parse(itemJsonArrayStr);
+    itemJsonArray = JSON.parse(itemJsonArrayStr);
      // Delete itemIndex element from the array
-     itemJsonArray.slice(itemIndex,1);
-     localStorage.setItem('itemsJson', Json.stringify(itemJsonArray));
+     itemJsonArray.splice(itemIndex,1);
+     localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray));
      update();
 }
 
